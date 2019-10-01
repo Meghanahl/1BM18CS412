@@ -1,32 +1,34 @@
 class CallDetail:
-    def __init__(self):
-        self.call_made=None
-        self.called=None
-        self.duration=None
-        self.time=None
+    def __init__(self,call,recv,dur,typ):
+        self.caller_no=call
+        self.receiver_no=recv
+        self.duration=dur
+        self.type_of_call=typ
+
+    def print_details(self):
+        print("Call Details :\nCaller no. : ",self.caller_no,
+              "\nReceiver no. : ",self.receiver_no,
+              "\nDuration : ",self.duration,
+              " min\nType of Call : ",self.type_of_call,"\n")
 
 class Util:
+    
     def __init__(self):
         self.list_of_call_objects=[]
 
     def parse_customer(self,list_of_call_string):
-        for i in range(len(list_of_call_string)):
-            lis=list_of_call_string[i].split(",")
-            print(lis)
-            self.list_of_call_objects.append(lis)
-    def print1(self):
-        for i in range(len(self.list_of_call_objects)):
-            print("callmade :",self.list_of_call_objects[i][0],end="\n")
-            print("called to:",self.list_of_call_objects[i][1],end="\n")
-            print("duration:",self.list_of_call_objects[i][2],end="\n")
-            print("time:",self.list_of_call_objects[i][3],end="\n")
+        for i in list_of_call_string:
+            call=i.split(',')
+            self.list_of_call_objects.append(CallDetail(call[0],call[1],call[2],call[3]))
 
-
-
+    def print_list(self):
+        for call in self.list_of_call_objects:
+            call.print_details()
+            
 call='9990000001,9330000001,23,STD'
-call2='9990000001,9330000002,54,local'
-call3='9990000001,9330000003,6,ISD'
+call2='9990000004,9330000002,54,Local'
+call3='9990000005,9330000003,6,ISD'
 list_of_call_string=[call,call2,call3]
-x=Util()
-x.parse_customer(list_of_call_string)
-x.print1()
+obj=Util()
+obj.parse_customer(list_of_call_string) 
+obj.print_list()
